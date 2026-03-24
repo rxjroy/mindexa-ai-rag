@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predev": "node copy.js",
     "build": "next build",
+    "prebuild": "node copy.js",
     "start": "next start",
     "lint": "next lint"
   },

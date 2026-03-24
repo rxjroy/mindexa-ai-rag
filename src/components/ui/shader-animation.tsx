@@ -125,7 +125,7 @@ export function ShaderAnimation({ className, style }: { className?: string, styl
         if (container && sceneRef.current.renderer.domElement) {
           try {
             container.removeChild(sceneRef.current.renderer.domElement)
-          } catch (e) {}
+          } catch (e) { }
         }
 
         sceneRef.current.renderer.dispose()
