@@ -4,6 +4,9 @@ interface AnimatedButtonProps {
   href?: string;
   onClick?: () => void;
   label?: string;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  className?: string;
 }
 
 const styles = `
@@ -79,8 +82,8 @@ const styles = `
   }
 
   .ag-btn:hover .ag-circle {
-    width: 220px;
-    height: 220px;
+    width: 600px;
+    height: 600px;
     opacity: 1;
   }
 `;
@@ -89,7 +92,7 @@ const ArrowPath = () => (
   <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
 );
 
-export default function AnimatedButton({ href, onClick, label = 'E N T R Y' }: AnimatedButtonProps) {
+export default function AnimatedButton({ href, onClick, label = 'E N T R Y', type, disabled, className = '' }: AnimatedButtonProps) {
   const inner = (
     <>
       <style>{styles}</style>
@@ -101,11 +104,16 @@ export default function AnimatedButton({ href, onClick, label = 'E N T R Y' }: A
   );
 
   if (href) {
-    return <a href={href} className="ag-btn">{inner}</a>;
+    return <a href={href} className={`ag-btn ${className}`}>{inner}</a>;
   }
 
   return (
-    <button className="ag-btn" onClick={onClick}>
+    <button 
+      type={type} 
+      disabled={disabled} 
+      className={`ag-btn ${className} ${disabled ? 'opacity-70 pointer-events-none' : ''}`} 
+      onClick={onClick}
+    >
       {inner}
     </button>
   );

@@ -1,6 +1,23 @@
 'use client';
 import React, { useState } from 'react';
 import { Send, Bot, User, CornerDownRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.6,
+    },
+  },
+};
+
+const messageVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
 
 export default function ChatContainer() {
   const [messages] = useState([
@@ -22,70 +39,80 @@ export default function ChatContainer() {
   ]);
 
   return (
-    <div className="glass-card flex flex-col h-full overflow-hidden">
-      <div className="p-5 border-b border-white/10 bg-white/5 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-          <Bot className="w-5 h-5 text-gold" />
+    <motion.div 
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="glass-card flex flex-col h-full overflow-hidden"
+    >
+      <div className="px-6 pt-6 pb-4 border-b border-white/[0.05] flex items-center justify-between">
+        <h2 className="text-base font-medium text-white/90 flex items-center gap-2">
+          <Bot className="w-4 h-4 text-gold/80" />
           Ask Mindexa
         </h2>
-        <span className="text-xs bg-gold/10 text-gold px-2 py-1 rounded border border-gold/20">Active Document: Q3_Financial_Report.pdf</span>
+        <span className="text-xs text-gold/60 font-light">Document: Q3_Financial_Report.pdf</span>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar"
+      >
         {messages.map((msg, i) => (
-          <div key={i} className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+          <motion.div variants={messageVariants} key={i} className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
             <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
               msg.role === 'assistant' 
-                ? 'bg-gradient-to-br from-gold to-gold-dark text-background' 
-                : 'bg-surface border border-white/10 text-gray-300'
+                ? 'bg-gold/10 text-gold' 
+                : 'bg-white/[0.03] border border-white/5 text-gray-400'
             }`}>
               {msg.role === 'assistant' ? <Bot className="w-4 h-4" /> : <User className="w-4 h-4" />}
             </div>
             
             <div className={`flex flex-col gap-2 max-w-[80%] ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
-              <div className={`p-4 rounded-2xl text-sm leading-relaxed ${
+              <div className={`p-4 rounded-2xl text-sm leading-relaxed font-light ${
                 msg.role === 'user'
-                  ? 'bg-surface border border-white/5 text-gray-100 rounded-tr-sm'
-                  : 'bg-white/5 border border-white/5 text-gray-300 rounded-tl-sm'
+                  ? 'bg-white/[0.03] border border-white/[0.05] text-gray-200 rounded-tr-sm'
+                  : 'bg-transparent text-gray-300'
               }`}>
                 {msg.content}
               </div>
               
               {msg.pageRef && (
-                <div className="flex items-center gap-1.5 text-xs text-gold/80 bg-gold/5 px-2.5 py-1 rounded cursor-pointer hover:bg-gold/10 transition-colors border border-gold/10">
+                <div className="flex items-center gap-1.5 text-xs text-gold/60 px-2 cursor-pointer hover:text-gold/80 transition-colors">
                   <CornerDownRight className="w-3 h-3" />
-                  Answer from <span className="font-semibold underline decoration-gold/30 underline-offset-2">{msg.pageRef}</span>
+                  from <span className="font-medium">{msg.pageRef}</span>
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
         ))}
         
         {/* Mock Typing Indicator */}
-        <div className="flex gap-4 opacity-50">
-           <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-gold to-gold-dark text-background">
+        <motion.div variants={messageVariants} className="flex gap-4 opacity-70">
+           <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-gold/10 text-gold">
               <Bot className="w-4 h-4" />
             </div>
-            <div className="bg-white/5 border border-white/5 p-4 rounded-2xl rounded-tl-sm flex items-center gap-1">
+            <div className="p-4 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
               <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
               <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
             </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       
-      <div className="p-4 border-t border-white/10 bg-background/50">
+      <div className="p-4 border-t border-white/[0.05]">
         <div className="relative flex items-center">
           <input 
             type="text" 
-            placeholder="Ask a question about this document..." 
-            className="w-full bg-surface border border-white/10 text-gray-100 text-sm rounded-xl pl-4 pr-12 py-3.5 focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/50 transition-all shadow-inner placeholder:text-gray-500 font-light"
+            placeholder="Ask a question..." 
+            className="w-full bg-white/[0.02] border border-white/10 text-gray-200 text-sm rounded-xl pl-4 pr-12 py-3.5 focus:outline-none focus:ring-1 focus:ring-gold/30 focus:bg-white/[0.04] transition-all placeholder:text-gray-600 font-light"
           />
-          <button className="absolute right-2 p-2 rounded-lg bg-gold hover:bg-gold-light text-background transition-colors disabled:opacity-50">
-            <Send className="w-4 h-4 translate-x-[-1px] translate-y-[1px]" />
+          <button className="absolute right-2 p-2 rounded-lg text-gray-400 hover:text-gold hover:bg-gold/10 transition-colors disabled:opacity-50">
+            <Send className="w-4 h-4" />
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

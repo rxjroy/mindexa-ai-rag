@@ -1,6 +1,6 @@
 # 🚀 Mindexa AI RAG
 
-> **Inteligent Document Retrieval & Analytics Platform**
+> **Intelligent Document Retrieval & Analytics Platform**
 
 Mindexa AI RAG is a modern, high-performance Retrieval-Augmented Generation application built with Next.js. It features a stunning, cinematic UI and advanced AI capabilities to help you unlock insights from your documents instantly.
 
@@ -11,38 +11,49 @@ Mindexa AI RAG is a modern, high-performance Retrieval-Augmented Generation appl
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- **🧠 AI-Powered Search**: Advanced RAG system for intelligent, context-aware document retrieval.
-- **⚡ Instant Summarization**: Digest 100-page reports in seconds with concise, actionable insights.
-- **💬 Context-Aware Q&A**: Ask anything about your documents and get precise answers.
-- **📍 Precise Citations**: Every answer includes direct references to the exact page and paragraph.
-- **🎨 Cinematic UI**:
-  - **Shader Animations**: Interactive, high-performance backgrounds powered by Three.js.
-  - **Flip Words**: Dynamic typography for engaging headlines.
-  - **Testimonial Carousel**: Smooth, auto-playing testimonials section.
-- **📱 Responsive & Premium**: Optimized for all devices with a luxury aesthetic.
+-   **🧠 Intelligent RAG Engine**: Context-aware document retrieval using advanced vector search patterns.
+-   **⚡ Instant Summarization**: High-speed processing for large documents with actionable insight extraction.
+-   **💬 Conversational AI**: Natural language interface for deep interrogation of your data.
+-   **📍 Source Attribution**: Direct citations with page and paragraph level precision.
+-   **🎨 Cinematic User Experience**:
+    -   **Interactive Shaders**: GPU-accelerated backgrounds powered by Three.js for a premium feel.
+    -   **Dynamic Typography**: Engaging "Flip Words" animations for impactful messaging.
+    -   **Smooth Interactions**: Seamless scroll-driven animations and luxurious transitions.
+-   **📱 Enterprise-Grade Design**: Fully responsive, dark-mode first aesthetic built for modern professionals.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/) & [Three.js](https://threejs.org/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
+-   **Frontend**: [Next.js 14](https://nextjs.org/) (App Router)
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **Animations**: [Framer Motion](https://www.framer.com/motion/) & [Three.js](https://threejs.org/)
+-   **Icons**: [Lucide React](https://lucide.dev/)
+-   **Type Safety**: [TypeScript](https://www.typescriptlang.org/)
+
+---
+
+## 🧩 Core Components
+
+The project features a suite of high-performance UI components:
+-   **ShaderAnimation**: Custom GLSL shader backgrounds.
+-   **FlipWords**: Animated text transitions for headers.
+-   **DisplayCards**: Interactive card stacks for feature highlights.
+-   **StickyTabs**: Scroll-linked navigation for process sections.
+-   **TestimonialCarousel**: Premium, auto-playing social proof section.
 
 ---
 
 ## 📂 Project Structure
 
-- `src/app/` - Next.js App Router pages and global styles.
-- `src/components/features/` - Core AI and RAG functionality.
-- `src/components/layout/` - Shared layouts, sidebar, and navigation components.
-- `src/components/ui/` - Reusable, high-performance UI components.
-- `public/` - Static assets and images.
-- `logo/` - Source logo assets.
+-   `src/app/` - Next.js App Router pages and global styles.
+-   `src/components/features/` - Core AI logic and feature-specific components (Chat, Upload).
+-   `src/components/layout/` - Global layout elements (Navbar, Sidebar, Footer).
+-   `src/components/ui/` - Reusable, atomic-level UI components.
+-   `public/` - Static assets and optimized images.
+-   `logo/` - Source branding assets.
 
 ---
 
@@ -50,39 +61,46 @@ Mindexa AI RAG is a modern, high-performance Retrieval-Augmented Generation appl
 
 ### Prerequisites
 
-- Node.js (Latest LTS)
-- npm or yarn
+-   Node.js (Latest LTS)
+-   npm, yarn, or pnpm
 
 ### Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/rxjroy/mindexa-ai-rag.git
-   ```
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/rxjroy/mindexa-ai-rag.git
+    cd mindexa-ai-rag
+    ```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-3. **Asset Setup:**
-   Run the logo setup script to prepare public assets:
-   ```bash
-   node copy.js
-   ```
+3.  **Setup Assets:**
+    The project uses a custom script to manage branding assets:
+    ```bash
+    node copy.js
+    ```
 
-4. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
+4.  **Run Development Server:**
+    ```bash
+    npm run dev
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ---
 
 ## 📦 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
+Optimized for deployment on the [Vercel Platform](https://vercel.com/new), ensuring global edge delivery and seamless CI/CD.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) for details.
 
 ---
 
@@ -92,4 +110,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-<p align="center">Made with ❤️ by <b>Raj Roy (rxjroy)</b></p>
+<p align="center">Crafted with precision by <b>Raj Roy (rxjroy)</b></p>

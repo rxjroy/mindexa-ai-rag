@@ -1,11 +1,15 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
-import { Zap, Shield, Search } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { ShaderAnimation } from '@/components/ui/shader-animation';
 import AnimatedButton from '@/components/ui/AnimatedButton';
 import { Testimonials } from '@/components/ui/unique-testimonial';
 import { FlipWords } from '@/components/ui/flip-words';
 import LandingHeader from '@/components/layout/LandingHeader';
+import HorizontalScrollFeatures from '@/components/features/HorizontalScrollFeatures';
+import HowItWorks from '@/components/features/HowItWorks';
 
 export default function LandingPage() {
   return (
@@ -14,103 +18,126 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative px-6 pt-40 pb-32 lg:pt-52 lg:pb-48 flex flex-col items-center justify-center text-center overflow-hidden">
+        <section className="relative px-6 pt-40 pb-32 lg:pt-52 lg:pb-48 flex flex-col items-center justify-center text-center overflow-hidden min-h-[90vh]">
           {/* Shader Background */}
           <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mix-blend-screen opacity-70">
             <ShaderAnimation className="w-full h-full" />
           </div>
           {/* Background glows */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[150px] pointer-events-none z-0" />
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[150px] pointer-events-none z-0" 
+          />
 
           <div className="relative z-10 flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-medium mb-8 badge-glow">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-medium mb-8 badge-glow"
+            >
               <SparklesIcon className="w-3.5 h-3.5 sparkle-spin" />
               <span className="badge-shimmer-text">Mindexa AI 2.0 is now live</span>
-            </div>
+            </motion.div>
 
-            <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-white max-w-4xl mb-6 leading-tight">
-              Unlock the intelligence hidden inside your{' '}
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-5xl lg:text-7xl font-bold tracking-tight text-white max-w-4xl mb-6 leading-tight"
+            >
+              Unlock the <span className="font-playfair italic text-gold font-normal px-1">intelligence</span> hidden inside your{' '}
               <FlipWords
                 words={['documents.', 'insights.', 'knowledge.', 'analytics.', 'patterns.']}
                 duration={1000}
                 className="text-gold"
               />
-            </h1>
+            </motion.h1>
 
-            <p className="text-lg text-gray-400 max-w-2xl mb-10 leading-relaxed">
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-lg text-gray-400 max-w-2xl mb-10 leading-relaxed"
+            >
               Upload any PDF and let Mindexa AI generate instant summaries, extract key insights, and answer your questions with precise page citations.
-            </p>
+            </motion.p>
 
-            <AnimatedButton href="/dashboard" label="TRY IT OUT" />
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              <AnimatedButton href="/dashboard" label="TRY IT OUT" />
+            </motion.div>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section id="features" className="px-6 py-24 bg-charcoal/50 border-y border-white/5 relative">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Enterprise-Grade Document Intelligence</h2>
-              <p className="text-gray-400 max-w-xl mx-auto">Everything you need to read faster, comprehend deeper, and make better decisions from your data.</p>
-            </div>
+        {/* Features Section - Horizontal Scroll */}
+        <HorizontalScrollFeatures />
 
-            <div className="grid md:grid-cols-3 gap-6 mx-auto">
-              {[
-                {
-                  icon: <Zap className="w-6 h-6 text-gold" />,
-                  title: "Instant Summarization",
-                  desc: "Mindexa AI digests 100-page reports in seconds, rendering concise, actionable bullet points."
-                },
-                {
-                  icon: <Search className="w-6 h-6 text-gold" />,
-                  title: "Context-Aware Q&A",
-                  desc: "Ask anything about your document. Our system understands the nuanced context to deliver exact answers."
-                },
-                {
-                  icon: <Shield className="w-6 h-6 text-gold" />,
-                  title: "Precise Citations",
-                  desc: "Every answer includes a direct reference to the exact page and paragraph it was sourced from."
-                }
-              ].map((feature, i) => (
-                <div key={i} className="bg-surface/50 border border-white/10 p-8 rounded-3xl hover:bg-white/5 hover:border-gold/30 transition-all duration-300">
-                  <div className="w-14 h-14 rounded-2xl bg-gold/10 flex items-center justify-center mb-6">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
-                  <p className="text-gray-400 leading-relaxed text-sm">
-                    {feature.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* How It Works Section */}
+        <HowItWorks />
 
         {/* Testimonials Section */}
         <section id="testimonials" className="px-6 py-32 relative overflow-hidden">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-4">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">Loved by Teams Worldwide</h2>
-              <p className="text-gray-400 max-w-xl mx-auto">See how professionals are accelerating their workflows with Mindexa AI.</p>
+          <motion.div 
+            initial={{ opacity: 0, filter: 'blur(10px)', y: 40, scale: 0.95 }}
+            whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0, scale: 1 }}
+            viewport={{ margin: "-10% 0px -10% 0px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="text-center mb-20 px-6">
+              <h2 className="text-5xl lg:text-7xl font-bold tracking-tight text-white mx-auto mb-6 leading-tight">Loved by Teams Worldwide</h2>
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">See how professionals are accelerating their workflows with Mindexa AI.</p>
             </div>
             <Testimonials />
-          </div>
+          </motion.div>
         </section>
       </main>
 
       {/* Footer */}
       <footer className="relative border-t border-white/10 bg-charcoal/80 backdrop-blur-lg pt-16 pb-8 px-6 overflow-hidden">
         {/* Subtle background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-gold/50 to-transparent opacity-50" />
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.5 }}
+          viewport={{ margin: "-10%" }}
+          transition={{ duration: 1.5 }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-gold/50 to-transparent" 
+        />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[150px] bg-gold/10 blur-[100px] rounded-full pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-8 relative z-10">
-          <Link href="/" className="flex items-center group">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ margin: "-10%" }}
+          transition={{ duration: 0.8 }}
+          className="max-w-7xl mx-auto flex flex-col items-center gap-8 relative z-10"
+        >
+          <Link 
+            href="/" 
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+            className="flex items-center group"
+          >
             <img src="/images/logo.png" alt="Mindexa AI" className="h-16 w-auto object-contain grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 hover:scale-105" />
           </Link>
 
           <nav className="flex gap-8">
             <Link href="#features" className="text-sm text-gray-400 hover:text-gold transition-colors duration-300 relative group">
               Features
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold group-hover:w-full transition-all duration-300" />
+            </Link>
+            <Link href="#how-it-works" className="text-sm text-gray-400 hover:text-gold transition-colors duration-300 relative group">
+              How It Works
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold group-hover:w-full transition-all duration-300" />
             </Link>
             <Link href="#testimonials" className="text-sm text-gray-400 hover:text-gold transition-colors duration-300 relative group">
@@ -141,7 +168,7 @@ export default function LandingPage() {
               </span>
             </a>
           </div>
-        </div>
+        </motion.div>
       </footer>
     </div>
   );

@@ -36,17 +36,17 @@ export default function UploadArea() {
 
   return (
     <div className="w-full">
-      <h2 className="text-xl font-semibold mb-4 text-white flex items-center gap-2">
-        <UploadCloud className="w-6 h-6 text-gold" />
+      <h2 className="text-xl font-light mb-4 text-white/90 flex items-center gap-3">
+        <UploadCloud className="w-5 h-5 text-gold/80" />
         Document Upload
       </h2>
       <div 
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`relative w-full rounded-2xl border-2 border-dashed transition-all duration-300 p-8 flex flex-col items-center justify-center min-h-[160px]
-          ${isDragging ? 'border-gold bg-gold/5' : 'border-white/10 hover:border-white/20 hover:bg-white/5'}
-          glass-card`}
+        className={`relative w-full rounded-2xl border border-dashed transition-all duration-500 p-8 flex flex-col items-center justify-center min-h-[160px] cursor-pointer
+          ${isDragging ? 'border-gold/50 bg-gold/5' : 'border-white/10 hover:border-white/30 bg-white/[0.01] hover:bg-white/[0.03]'}
+          `}
       >
         <AnimatePresence mode="wait">
           {!file && (
@@ -61,8 +61,8 @@ export default function UploadArea() {
                 <UploadCloud className="w-6 h-6 text-gray-400" />
               </div>
               <h3 className="text-lg font-medium text-white mb-1">Upload a document to get started</h3>
-              <p className="text-sm text-gray-400 mb-6">Drag & drop your PDF here, or click to browse</p>
-              <label className="cursor-pointer bg-gold text-background px-6 py-2.5 rounded-full font-medium hover:bg-gold-light transition-colors shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+              <p className="text-sm text-gray-400 mb-6 font-light">Drag & drop your PDF here, or click to browse</p>
+              <label className="cursor-pointer bg-white/[0.05] border border-white/10 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-white/10 hover:border-white/20 transition-all">
                 Browse Files
                 <input type="file" className="hidden" accept=".pdf" onChange={(e) => e.target.files && handleFileSelected(e.target.files[0])} />
               </label>

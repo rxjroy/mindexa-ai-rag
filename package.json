@@ -1,6 +1,16 @@
 {
   "name": "mindexa-ai-rag",
   "version": "0.1.0",
+  "description": "A cinematic, high-performance RAG application built with Next.js, Framer Motion, and Three.js.",
+  "keywords": [
+    "nextjs",
+    "rag",
+    "ai",
+    "threejs",
+    "framer-motion",
+    "tailwindcss",
+    "typescript"
+  ],
   "private": true,
   "scripts": {
     "dev": "next dev",
