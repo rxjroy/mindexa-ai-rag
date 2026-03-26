@@ -1,0 +1,1 @@
+"""Mindexa AI RAG Backend"""

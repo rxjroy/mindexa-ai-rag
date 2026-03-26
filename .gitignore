@@ -44,3 +44,22 @@ public/logo.png
 *.log
 .vercel
 .turbo
+
+# Python Backend
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+venv/
+.venv/
+backend/uploads/
+backend/chroma_data/
+backend/test_uploads/
+backend/test_chroma_data/
+backend/test_chroma/
+backend/*.db
+backend/test.db
+backend/mindexa_dev.db
+backend/.env
+backend/alembic/versions/

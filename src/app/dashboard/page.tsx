@@ -10,6 +10,8 @@ import UploadArea from '@/components/features/UploadArea';
 import SummaryCard from '@/components/features/SummaryCard';
 import ChatContainer from '@/components/features/ChatContainer';
 
+import { WorkspaceProvider, useWorkspace } from '@/contexts/WorkspaceContext';
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -26,9 +28,10 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 };
 
-export default function Dashboard() {
+function DashboardInner() {
   const router = useRouter();
   const [isAuth, setIsAuth] = useState(false);
+  const { isLoading: isWorkspaceLoading } = useWorkspace();
 
   useEffect(() => {
     const auth = localStorage.getItem('isAuthenticated');
@@ -39,7 +42,7 @@ export default function Dashboard() {
     }
   }, [router]);
 
-  if (!isAuth) {
+  if (!isAuth || isWorkspaceLoading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center">
         <span className="w-8 h-8 border-2 border-gold/20 border-t-gold rounded-full animate-spin" />
@@ -74,5 +77,13 @@ export default function Dashboard() {
         </MainLayout>
       </div>
     </div>
+  );
+}
+
+export default function Dashboard() {
+  return (
+    <WorkspaceProvider>
+      <DashboardInner />
+    </WorkspaceProvider>
   );
 }

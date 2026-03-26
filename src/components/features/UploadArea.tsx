@@ -2,8 +2,11 @@
 import React, { useState } from 'react';
 import { UploadCloud, File, CheckCircle2, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useWorkspace } from '@/contexts/WorkspaceContext';
+import { api } from '@/lib/api';
 
 export default function UploadArea() {
+  const { activeWorkspace } = useWorkspace();
   const [isDragging, setIsDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -25,13 +28,24 @@ export default function UploadArea() {
     }
   };
 
-  const handleFileSelected = (selectedFile: File) => {
+  const handleFileSelected = async (selectedFile: File) => {
+    if (!activeWorkspace) return;
+    
     setFile(selectedFile);
     setUploading(true);
-    // Mock upload delay
-    setTimeout(() => {
+    
+    try {
+      await api.documents.upload(activeWorkspace.id, selectedFile);
+      // Wait a moment for UX before clearing or showing success
+      setTimeout(() => {
+        setUploading(false);
+        setFile(null); // Clear to allow new uploads
+      }, 1500);
+    } catch (e) {
+      console.error('Failed to upload', e);
       setUploading(false);
-    }, 2000);
+      // Ideally show an error toast here
+    }
   };
 
   return (

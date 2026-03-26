@@ -5,29 +5,40 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ShaderAnimation } from '@/components/ui/shader-animation';
-import { Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, User, AlertCircle } from 'lucide-react';
 import AnimatedButton from '@/components/ui/AnimatedButton';
+import { api } from '@/lib/api';
 
 export default function SignupPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API registration
-    setTimeout(() => {
+    setError(null);
+    try {
+      const resp = await api.auth.signup(email, fullName, password);
+      localStorage.setItem('access_token', resp.access_token);
+      localStorage.setItem('refresh_token', resp.refresh_token);
       localStorage.setItem('isAuthenticated', 'true');
       router.push('/dashboard');
-    }, 800);
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign up');
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleSignup = () => {
     setIsGoogleLoading(true);
     setTimeout(() => {
-      localStorage.setItem('isAuthenticated', 'true');
-      router.push('/dashboard');
+      setIsGoogleLoading(false);
+      setError('Google signup not configured yet');
     }, 800);
   };
 
@@ -62,6 +73,13 @@ export default function SignupPage() {
             <p className="text-gray-400 text-sm mt-2 font-light">Join us to start analyzing your documents</p>
           </div>
 
+          {error && (
+            <div className="mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-200">{error}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSignup} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-gray-300 ml-1">Full Name</label>
@@ -71,6 +89,8 @@ export default function SignupPage() {
                 </div>
                 <input 
                   type="text" 
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                   required
                   placeholder="John Doe" 
                   className="w-full bg-white/[0.03] border border-white/10 text-white rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/30 transition-all font-light placeholder:text-gray-600"
@@ -86,6 +106,8 @@ export default function SignupPage() {
                 </div>
                 <input 
                   type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="name@company.com" 
                   className="w-full bg-white/[0.03] border border-white/10 text-white rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/30 transition-all font-light placeholder:text-gray-600"
@@ -101,6 +123,8 @@ export default function SignupPage() {
                 </div>
                 <input 
                   type="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••" 
                   className="w-full bg-white/[0.03] border border-white/10 text-white rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/30 transition-all font-light placeholder:text-gray-600"

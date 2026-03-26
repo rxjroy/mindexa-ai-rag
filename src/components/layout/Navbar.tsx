@@ -9,6 +9,8 @@ export default function Navbar() {
   const router = useRouter();
 
   const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     localStorage.removeItem('isAuthenticated');
     router.push('/login');
   };

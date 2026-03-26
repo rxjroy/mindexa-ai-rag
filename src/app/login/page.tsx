@@ -5,29 +5,40 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ShaderAnimation } from '@/components/ui/shader-animation';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, AlertCircle } from 'lucide-react';
 import AnimatedButton from '@/components/ui/AnimatedButton';
+import { api } from '@/lib/api';
 
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API verification
-    setTimeout(() => {
+    setError(null);
+    try {
+      const resp = await api.auth.login(email, password);
+      localStorage.setItem('access_token', resp.access_token);
+      localStorage.setItem('refresh_token', resp.refresh_token);
       localStorage.setItem('isAuthenticated', 'true');
       router.push('/dashboard');
-    }, 800);
+    } catch (err: any) {
+      setError(err.message || 'Failed to login');
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleLogin = () => {
     setIsGoogleLoading(true);
+    // Not implemented in backend yet
     setTimeout(() => {
-      localStorage.setItem('isAuthenticated', 'true');
-      router.push('/dashboard');
+      setIsGoogleLoading(false);
+      setError('Google login not configured yet');
     }, 800);
   };
 
@@ -62,6 +73,13 @@ export default function LoginPage() {
             <p className="text-gray-400 text-sm mt-2 font-light">Sign in to your account to continue</p>
           </div>
 
+          {error && (
+            <div className="mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-200">{error}</p>
+            </div>
+          )}
+
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-gray-300 ml-1">Email address</label>
@@ -71,6 +89,8 @@ export default function LoginPage() {
                 </div>
                 <input 
                   type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="name@company.com" 
                   className="w-full bg-white/[0.03] border border-white/10 text-white rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/30 transition-all font-light placeholder:text-gray-600"
@@ -89,6 +109,8 @@ export default function LoginPage() {
                 </div>
                 <input 
                   type="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••" 
                   className="w-full bg-white/[0.03] border border-white/10 text-white rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/30 transition-all font-light placeholder:text-gray-600"
